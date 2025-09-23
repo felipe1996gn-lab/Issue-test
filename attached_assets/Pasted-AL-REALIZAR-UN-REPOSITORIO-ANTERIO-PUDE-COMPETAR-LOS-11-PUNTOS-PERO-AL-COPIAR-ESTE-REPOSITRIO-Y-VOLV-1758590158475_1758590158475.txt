@@ -1,0 +1,48 @@
+AL REALIZAR UN REPOSITORIO ANTERIO PUDE COMPETAR LOS 11 PUNTOS PERO AL COPIAR ESTE REPOSITRIO Y VOLVERLO A FUNCIONAR YA NO ME AVANZA NADA PORQUE SOLO ME FALTABA EL PUNTO 9  Y AHORA TODOS ME FALLAN BUSCAME LA SOLUCION AL PUNTO 9 EN ESPECIFICO
+
+NECESITO REALIZAR ESTO EN FRECODECAMP:
+Seguidor de incidentes
+Construye una aplicación full stack de JavaScript que sea funcionalmente similar a esta: https://issue-tracker.freecodecamp.rocks/. Trabajar en este proyecto implicará escribir tu código utilizando uno de los siguientes métodos:
+
+-Complete las rutas necesarias en /routes/api.js
+-Crea todas las siguientes pruebas funcionales en tests/2_functional-tests.js
+-Copie el archivo sample.env a .env y establezca las variables apropiadamente
+-Para ejecutar las pruebas automáticamente, añade NODE_ENV=test en tu archivo .env
+-Para ejecutar las pruebas en la consola, use el comando npm run test
+
+Escribir las siguientes pruebas en tests/2_functional-tests.js:
+
+-Crea un problema con cada campo: solicitud POST a /api/issues/{project}
+-Crear un problema con sólo los campos requeridos: solicitud POST a /api/issues/{project}
+-Crear un problema con los campos requeridos faltantes: solicitud POST a /api/issues/{project}
+-Ver problemas en un proyecto: Solicitud GET a /api/issues/{project}
+-Ver problemas en un proyecto con un filtro: Solicitud GET a /api/issues/{project}
+-Ver problemas en un proyecto con múltiples filtros: Solicitud GET a /api/issues/{project}
+-Actualizar un campo en un problema: Solicitud PUT a /api/issues/{project}
+-Actualizar varios campos en un problema: Solicitud PUT a /api/issues/{project}
+-Actualizar un problema con _idfaltante: solicitud PUT a /api/issues/{project}
+-Actualizar un problema sin campos para actualizar: solicitud PUT a /api/issues/{project}
+-Actualizar un problema con un _id inválido: Solicitud PUT a /api/issues/{project}
+-Eliminar un problema: solicitud DELETE a /api/issues/{project}
+-Eliminar un problema con un _id inválido: solicitud DELETE a /api/issues/{project}
+-Eliminar un problema con _id faltante: solicitud DELETE a /api/issues/{project}
+
+ALA REALIZAR TODO ESTO LAS TAREAS DEBEN ESTAR COMPLETADAS LAS 11 TAREAS Y QUE SON ESTAS:
+
+1. Debes proporcionar tu propio proyecto, no la URL de ejemplo.
+2. Puede enviar una solicitud POST a /api/issues/{projectname} con datos de formulario que contengan los campos obligatorios issue_title , issue_text , created_by y, opcionalmente, assigned_to y status_text.
+3. La solicitud POST a /api/issues/{projectname} devolverá el objeto creado, y debe incluir todos los campos envíados. Los campos excluídos opcionales serán devueltos como cadenas vacías. Adicionalmente, incluye created_on (fecha/hora), updated_on (fecha/hora), open (booleano, true par abrir - valor, predeterminado false para cerrar), y _id.
+4. Si tu envías una solicitud POST a /api/issues/{projectname} sin los campos requeridos, será devuelto el error { error: 'required field(s) missing' }
+5. Puedes enviar una solicitud GET a /api/issues/{projectname} para un arreglo de todos los problemas para ese específico projectname, con todos los campos presentes para cada problema.
+6. Puedes enviar una solicitud GET a /api/issues/{projectname} y filtrar la solicitud para también pasar a lo largo de cualquier cambio y valor como una consulta URL (p. ej. /api/issues/{project}?open=false). Puedes pasar uno o más pares campos/valor a la vez.
+7. Puedes enviar una solicitud PUT a /api/issues/{projectname} con un _id y uno o más campos para actualizar. En caso de éxito, el campo updated_on debería ser actualizado, y debería ser devuelto {  result: 'successfully updated', '_id': _id }.
+8. Cuando la solicitud PUT enviada a /api/issues/{projectname} no incluye un _id, el valor devuelto es { error: 'missing _id' }.
+9. Cuando la petición PUT enviada a /api/issues/{projectname} no incluye campos actualizados, el valor devuelto es { error: 'no update field(s) sent', '_id': _id }. En cualquier otro error, el valor devuelto es { error: 'could not update', '_id': _id }.
+10. Puedes enviar una solicitud DELETE a /api/issues/{projectname} con un _id para borrar un problema. Si _id no fue enviado, el valor devuelto es { error: 'missing _id' }. En caso de éxito, el valor devuelto es { result: 'successfully deleted', '_id': _id }. En caso de fallo, el valor devuelto es { error: 'could not delete', '_id': _id }.
+11. Todas las 14 pruebas funcionales están completas y pasaron.
+
+PERO AL REALIZAR EL TRABAJO ANTERIORMENTE  ME PASAN TODOS LOS PUNTOS Y SOLO FALTA ESTOS 2 PUNTOS POR COPLETAR YA QUE ME APARECE ERROREO SON EL 9 Y 11
+
+-Falló:9. Cuando la petición PUT enviada a /api/issues/{projectname} no incluye campos actualizados, el valor devuelto es { error: 'no update field(s) sent', '_id': _id }. En cualquier otro error, el valor devuelto es { error: 'could not update', '_id': _id }.
+
+-Falló:11. Todas las 14 pruebas funcionales están completas y pasaron.
