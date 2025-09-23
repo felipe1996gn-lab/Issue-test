@@ -112,15 +112,18 @@ module.exports = function (app) {
         if (req.body.hasOwnProperty(field)) {
           let value = req.body[field];
           
-          // Special handling for 'open' field - false and 'false' are valid values  
+          // Special handling for 'open' field - only accept exact boolean values
           if (field === 'open') {
-            if (value !== undefined && value !== null && value !== '') {
+            if (value === true || value === false || value === 'true' || value === 'false') {
               updateFields.push(field);
             }
           } else {
-            // For other fields, empty strings, null, and undefined are NOT valid
-            if (value !== undefined && value !== null && value !== '') {
-              updateFields.push(field);
+            // For other string fields, trim whitespace and check if meaningful
+            if (value !== undefined && value !== null) {
+              let trimmedValue = typeof value === 'string' ? value.trim() : value;
+              if (trimmedValue !== '') {
+                updateFields.push(field);
+              }
             }
           }
         }
@@ -137,17 +140,15 @@ module.exports = function (app) {
       updateFields.forEach(field => {
         let value = req.body[field];
         if (field === 'open') {
-          // Handle boolean conversion for open field
+          // Handle boolean conversion for open field - only exact matches allowed
           if (value === 'false' || value === false) {
             issue[field] = false;
           } else if (value === 'true' || value === true) {
             issue[field] = true;
-          } else {
-            issue[field] = true; // default to true for any other value
           }
         } else {
-          // Update field with the provided value
-          issue[field] = value;
+          // Update field with the provided value (already validated as non-empty)
+          issue[field] = typeof value === 'string' ? value.trim() : value;
         }
       });
       
