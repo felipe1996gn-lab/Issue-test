@@ -1,0 +1,11 @@
+1. Debes proporcionar tu propio proyecto, no la URL de ejemplo.
+Aprobado:2. You can send a POST request to /api/issues/{projectname} with form data containing the required fields issue_title, issue_text, created_by, and optionally assigned_to and status_text.
+Aprobado:3. La solicitud POST a /api/issues/{projectname} devolverá el objeto creado, y debe incluir todos los campos envíados. Los campos excluídos opcionales serán devueltos como cadenas vacías. Adicionalmente, incluye created_on (fecha/hora), updated_on (fecha/hora), open (booleano, true par abrir - valor, predeterminado false para cerrar), y _id.
+Aprobado:4. Si tu envías una solicitud POST a /api/issues/{projectname} sin los campos requeridos, será devuelto el error { error: 'required field(s) missing' }
+Aprobado:5. Puedes enviar una solicitud GET a /api/issues/{projectname} para un arreglo de todos los problemas para ese específico projectname, con todos los campos presentes para cada problema.
+Aprobado:6. Puedes enviar una solicitud GET a /api/issues/{projectname} y filtrar la solicitud para también pasar a lo largo de cualquier cambio y valor como una consulta URL (p. ej. /api/issues/{project}?open=false). Puedes pasar uno o más pares campos/valor a la vez.
+Aprobado:7. Puedes enviar una solicitud PUT a /api/issues/{projectname} con un _id y uno o más campos para actualizar. En caso de éxito, el campo updated_on debería ser actualizado, y debería ser devuelto {  result: 'successfully updated', '_id': _id }.
+Aprobado:8. Cuando la solicitud PUT enviada a /api/issues/{projectname} no incluye un _id, el valor devuelto es { error: 'missing _id' }.
+Aprobado:9. Cuando la petición PUT enviada a /api/issues/{projectname} no incluye campos actualizados, el valor devuelto es { error: 'no update field(s) sent', '_id': _id }. En cualquier otro error, el valor devuelto es { error: 'could not update', '_id': _id }.
+Aprobado:10. Puedes enviar una solicitud DELETE a /api/issues/{projectname} con un _id para borrar un problema. Si _id no fue enviado, el valor devuelto es { error: 'missing _id' }. En caso de éxito, el valor devuelto es { result: 'successfully deleted', '_id': _id }. En caso de fallo, el valor devuelto es { error: 'could not delete', '_id': _id }.
+Falló:11. Todas las 14 pruebas funcionales están completas y pasaron.
