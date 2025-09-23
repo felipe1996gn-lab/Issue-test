@@ -90,19 +90,7 @@ module.exports = function (app) {
           return res.json({ error: 'missing _id' });
         }
         
-        // Initialize project issues if not exists
-        if (!issues[project]) {
-          issues[project] = [];
-        }
-        
-        let issueId = String(req.body._id);
-        let issueIndex = issues[project].findIndex(issue => issue._id === issueId);
-        
-        if (issueIndex === -1) {
-          return res.json({ error: 'could not update', '_id': String(req.body._id) });
-        }
-        
-        // Check if there are fields to update (excluding _id)
+        // Check if there are fields to update FIRST (before checking if issue exists)
         // Define which fields are valid for updating
         const validUpdateFields = ['issue_title', 'issue_text', 'created_by', 'assigned_to', 'status_text', 'open'];
         
@@ -130,8 +118,22 @@ module.exports = function (app) {
           }
         });
         
+        // If no valid update fields, return error regardless of whether _id exists
         if (updateFields.length === 0) {
           return res.json({ error: 'no update field(s) sent', '_id': String(req.body._id) });
+        }
+        
+        // Now check if the issue exists (only after confirming there are fields to update)
+        // Initialize project issues if not exists
+        if (!issues[project]) {
+          issues[project] = [];
+        }
+        
+        let issueId = String(req.body._id);
+        let issueIndex = issues[project].findIndex(issue => issue._id === issueId);
+        
+        if (issueIndex === -1) {
+          return res.json({ error: 'could not update', '_id': String(req.body._id) });
         }
         
         // Update issue fields
