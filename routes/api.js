@@ -84,76 +84,82 @@ module.exports = function (app) {
     .put(function (req, res){
       let project = req.params.project;
       
-      // Check if _id is provided
-      if (!req.body._id) {
-        return res.json({ error: 'missing _id' });
-      }
-      
-      // Initialize project issues if not exists
-      if (!issues[project]) {
-        issues[project] = [];
-      }
-      
-      let issueId = req.body._id.toString();
-      let issueIndex = issues[project].findIndex(issue => issue._id === issueId);
-      
-      if (issueIndex === -1) {
-        return res.json({ error: 'could not update', '_id': String(req.body._id) });
-      }
-      
-      // Check if there are fields to update (excluding _id)
-      // Define which fields are valid for updating
-      const validUpdateFields = ['issue_title', 'issue_text', 'created_by', 'assigned_to', 'status_text', 'open'];
-      
-      // Only look at fields that are both present in request AND in valid fields list
-      let updateFields = [];
-      
-      validUpdateFields.forEach(field => {
-        if (req.body.hasOwnProperty(field)) {
-          let value = req.body[field];
-          
-          // Special handling for 'open' field - only accept exact boolean values
-          if (field === 'open') {
-            if (value === true || value === false || value === 'true' || value === 'false') {
-              updateFields.push(field);
-            }
-          } else {
-            // For other string fields, trim whitespace and check if meaningful
-            if (value !== undefined && value !== null) {
-              let trimmedValue = typeof value === 'string' ? value.trim() : value;
-              if (trimmedValue !== '') {
+      try {
+        // Check if _id is provided
+        if (!req.body._id) {
+          return res.json({ error: 'missing _id' });
+        }
+        
+        // Initialize project issues if not exists
+        if (!issues[project]) {
+          issues[project] = [];
+        }
+        
+        let issueId = String(req.body._id);
+        let issueIndex = issues[project].findIndex(issue => issue._id === issueId);
+        
+        if (issueIndex === -1) {
+          return res.json({ error: 'could not update', '_id': String(req.body._id) });
+        }
+        
+        // Check if there are fields to update (excluding _id)
+        // Define which fields are valid for updating
+        const validUpdateFields = ['issue_title', 'issue_text', 'created_by', 'assigned_to', 'status_text', 'open'];
+        
+        // Only look at fields that are both present in request AND in valid fields list
+        let updateFields = [];
+        
+        validUpdateFields.forEach(field => {
+          if (req.body.hasOwnProperty(field)) {
+            let value = req.body[field];
+            
+            // Special handling for 'open' field - only accept exact boolean values
+            if (field === 'open') {
+              if (value === true || value === false || value === 'true' || value === 'false') {
                 updateFields.push(field);
+              }
+            } else {
+              // For other string fields, trim whitespace and check if meaningful
+              if (value !== undefined && value !== null) {
+                let trimmedValue = typeof value === 'string' ? value.trim() : value;
+                if (trimmedValue !== '') {
+                  updateFields.push(field);
+                }
               }
             }
           }
+        });
+        
+        if (updateFields.length === 0) {
+          return res.json({ error: 'no update field(s) sent', '_id': String(req.body._id) });
         }
-      });
-      
-      if (updateFields.length === 0) {
-        return res.json({ error: 'no update field(s) sent', '_id': String(req.body._id) });
-      }
-      
-      // Update issue fields
-      let issue = issues[project][issueIndex];
-      
-      // Update only the validated fields
-      updateFields.forEach(field => {
-        let value = req.body[field];
-        if (field === 'open') {
-          // Handle boolean conversion for open field - only exact matches allowed
-          if (value === 'false' || value === false) {
-            issue[field] = false;
-          } else if (value === 'true' || value === true) {
-            issue[field] = true;
+        
+        // Update issue fields
+        let issue = issues[project][issueIndex];
+        
+        // Update only the validated fields
+        updateFields.forEach(field => {
+          let value = req.body[field];
+          if (field === 'open') {
+            // Handle boolean conversion for open field - only exact matches allowed
+            if (value === 'false' || value === false) {
+              issue[field] = false;
+            } else if (value === 'true' || value === true) {
+              issue[field] = true;
+            }
+          } else {
+            // Update field with the provided value (already validated as non-empty)
+            issue[field] = typeof value === 'string' ? value.trim() : value;
           }
-        } else {
-          // Update field with the provided value (already validated as non-empty)
-          issue[field] = typeof value === 'string' ? value.trim() : value;
-        }
-      });
-      
-      issue.updated_on = new Date().toISOString();
-      res.json({ result: 'successfully updated', '_id': String(req.body._id) });
+        });
+        
+        issue.updated_on = new Date().toISOString();
+        res.json({ result: 'successfully updated', '_id': String(req.body._id) });
+        
+      } catch (error) {
+        // Any other error should return 'could not update'
+        return res.json({ error: 'could not update', '_id': String(req.body._id) });
+      }
     })
     
     .delete(function (req, res){

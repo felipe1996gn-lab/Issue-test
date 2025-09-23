@@ -6,32 +6,70 @@ expertMode = true
 channel = "stable-25_05"
 
 [workflows]
-runButton = "Project"
 
-[[workflows.workflow]]
-name = "Project"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Issue Tracker Server"
-
-[[workflows.workflow]]
-name = "Issue Tracker Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm start"
-waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"
+[[ports]]
+localPort = 3000
+externalPort = 3000
 
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 32779
+externalPort = 5173
+
+[[ports]]
+localPort = 33697
+externalPort = 6800
+
+[[ports]]
+localPort = 34849
+externalPort = 8081
+
+[[ports]]
+localPort = 35215
+externalPort = 3002
+
+[[ports]]
+localPort = 35381
+externalPort = 3001
+
+[[ports]]
+localPort = 35553
+externalPort = 8080
+
+[[ports]]
+localPort = 36509
+externalPort = 9000
+
+[[ports]]
+localPort = 38309
+externalPort = 4200
+
+[[ports]]
+localPort = 39777
+externalPort = 5000
+
+[[ports]]
+localPort = 41453
+externalPort = 8008
+
+[[ports]]
+localPort = 41801
+externalPort = 8000
+
+[[ports]]
+localPort = 42661
+externalPort = 6000
+
+[[ports]]
+localPort = 44053
+externalPort = 8099
+
+[[ports]]
+localPort = 44591
+externalPort = 3003
 
 [deployment]
 deploymentTarget = "autoscale"
