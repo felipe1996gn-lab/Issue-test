@@ -7,6 +7,9 @@
 		"start": "node server.js",
 		"test": "mocha --timeout 5000 --recursive --exit --ui tdd tests/"
 	},
+	"engines": {
+		"node": ">=16.x"
+	},
 	"dependencies": {
 		"body-parser": "^1.19.0",
 		"chai": "^4.2.0",
@@ -19,7 +22,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/freeCodeCamp/boilerplate-project-issuetracker"
+		"url": "https://github.com/felipe1996gn-lab/Issue-test"
 	},
 	"keywords": [
 		"node",
