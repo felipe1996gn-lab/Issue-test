@@ -156,7 +156,7 @@ module.exports = function (app) {
         });
         
         issue.updated_on = new Date().toISOString();
-        res.json({ result: 'successfully updated', '_id': String(req.body._id) });
+        return res.json({ result: 'successfully updated', _id: String(req.body._id) });
         
       } catch (error) {
         // Any other error should return 'could not update'
